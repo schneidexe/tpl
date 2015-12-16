@@ -9,6 +9,6 @@ docker run --name tpl tpl && docker cp tpl:/go/src/github.com/schneidexe/tpl/bin
 
 ## test
 ```
-FOO=bar; BAR=foo,bar; FOBAR=foo:bar,bar:foo,sna:fu; bin/tpl-<OS>-<ARCH> -t test.tpl
+foo="bar; bar="[foo,bar]"; foobar="{foo:bar,bar:foo,sna:fu}"; snafu="{foo:[sna,fu]}"; bin/tpl-<OS>-<ARCH> -d -t test.tpl
 
 ```
