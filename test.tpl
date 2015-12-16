@@ -1,29 +1,32 @@
 simple string:
-{{ .FOO }}
+{{ .foo }}
 
 truncate string (only works for truncating the tail):
-{{ .FOO | printf "%.2s" }}
+{{ .foo | printf "%.2s" }}
 
 list:
-{{ .BAR }}
+{{ .bar }}
 
 iterate over list:
-{{ range $bar := .BAR}}{{ . }}
+{{ range $bar := .bar}}{{ . }}
 {{end}}
 
 iterate over list with index:
-{{ range $idx, $bar := .BAR}}{{ $idx }}:{{ $bar }}
+{{ range $idx, $bar := .bar}}{{ $idx }}:{{ $bar }}
 {{end}}
 
 access element in list:
-{{ index .BAR 1 }}
+{{ index .bar 1 }}
 
 map:
-{{ .FOOBAR }}
+{{ .foobar }}
 
 iterate over map with key and value:
-{{ range $foo, $bar := .FOOBAR}}{{ $foo }}:{{ $bar }}
+{{ range $foo, $bar := .foobar}}{{ $foo }}:{{ $bar }}
 {{end}}
 
 access element in map:
-{{ .FOOBAR.foo }}
+{{ .foobar.foo }}
+
+access subelements:
+{{ index .snafu.foo 1 }}
