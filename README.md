@@ -7,6 +7,7 @@ docker build -t tpl . && \
 docker run --name tpl tpl && \
 docker cp tpl:/go/src/github.com/schneidexe/tpl/bin . && \
 docker rm tpl
+docker rmi tpl
 ```
 
 ## test
