@@ -79,7 +79,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	if len(*templateFile) >= 0 {
+	if len(*templateFile) == 0 {
 		flag.Usage();
 		os.Exit(1)
 	}
