@@ -1,0 +1,35 @@
+simple string:
+bar
+
+special characters:
+1.0-123
+
+list:
+[foo bar]
+
+iterate over list:
+foo
+bar
+
+
+iterate over list with index:
+0:foo
+1:bar
+
+
+access element in list:
+bar
+
+map:
+map[foo:bar bar:foo]
+
+iterate over map with key and value:
+bar:foo
+foo:bar
+
+
+access element in map:
+bar
+
+access subelements:
+baz
