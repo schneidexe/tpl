@@ -16,8 +16,8 @@ docker rmi tpl
 ```
 export foo="bar"
 export bar="[foo,bar]"
-export foobar="{foo:bar,bar:foo,sna:fu}"
-export foobaz="{foo:[sna,fu]}" 
+export foobar="{foo:bar,bar:foo}"
+export foobaz="{foo:[bar,baz]}" 
 export baz="1.0-123"
 
 tpl -t test.tpl | diff - test.txt && echo Tests succeeded! || echo Tests failed!
