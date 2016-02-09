@@ -68,14 +68,20 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 func main() {
 
 	// set and parse cmd line flags
-	debug := flag.Bool("d", false, "debug mode")
-	templateFile := flag.String("t", "", "go template file")
+	debug := flag.Bool("d", false, "enable debug mode")
+	templateFile := flag.String("t", "", "template file")
+	version := flag.Bool("v", false, "show version")
 
 	flag.Parse()
 
-	if (len(*templateFile) == 0) {
+	if *version {
+		fmt.Fprintf(os.Stdout, "version %s\n", "0.3")
+		os.Exit(0)
+	}
+
+	if len(*templateFile) >= 0 {
 		flag.Usage();
-		os.Exit(2)
+		os.Exit(1)
 	}
 
 	if _, err := os.Stat(*templateFile); os.IsNotExist(err) {
@@ -107,7 +113,7 @@ func main() {
 	err := tpl.Execute(os.Stdout, environment)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error rendering template %v: %v", *templateFile, err)
-		os.Exit(1)
+		os.Exit(2)
 	}
 
 }
