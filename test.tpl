@@ -1,8 +1,8 @@
 simple string:
 {{ .foo }}
 
-truncate string (only works for truncating the tail):
-{{ .foo | printf "%.2s" }}
+special characters:
+{{ .baz }}
 
 list:
 {{ .bar }}
@@ -29,4 +29,4 @@ access element in map:
 {{ .foobar.foo }}
 
 access subelements:
-{{ index .snafu.foo 1 }}
+{{ index .foobaz.foo 1 }}

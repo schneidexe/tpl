@@ -1,6 +1,5 @@
 package main
 
-
 import (
 	"text/template"
 	"os"
@@ -8,63 +7,62 @@ import (
 	"strings"
 	"fmt"
 	"encoding/json"
-	"io"
-//	"log"
 	"regexp"
-	"errors"
 )
 
-func incr(val int) int {
-	return val + 1
-}
+func inputToObject(inputStr string, debug *bool) (result interface{}, err error) {
+	jsonStr := ""
+	lastChar := ""
 
-// add quotes to json
-func createValidJson(shellson string) (data interface{}, err error) {
-	validJson := ""
-	last := ""
+	if *debug {
+		fmt.Fprintf(os.Stderr, "input is: %v\n", inputStr)
+	}
 
-	for position, rune := range shellson {
-		current := string(rune)
+	for position, rune := range inputStr {
+		currentChar := string(rune)
 
-		isOpeningBrace, _ := regexp.MatchString("[{\\[]", current)
-		isColonOrComma, _ := regexp.MatchString("[:,]", current)
-		isNotSpecial, _ := regexp.MatchString("[^{\\[:,]", current)
-		lastWasSpecial, _ := regexp.MatchString("[{\\[:,]", last)
-		isClosingBrace, _ := regexp.MatchString("[}\\]]", current)
-		lastWasClosingBrace, _ := regexp.MatchString("[^}\\]]", last)
+		isOpeningBrace, _ := regexp.MatchString("[{\\[]", currentChar)
+		isColonOrComma, _ := regexp.MatchString("[:,]", currentChar)
+		isNotSpecial, _ := regexp.MatchString("[^{\\[:,]", currentChar)
+		lastWasSpecial, _ := regexp.MatchString("[{\\[:,]", lastChar)
+		isClosingBrace, _ := regexp.MatchString("[}\\]]", currentChar)
+		lastWasClosingBrace, _ := regexp.MatchString("[^}\\]]", lastChar)
 
 		if position > 0 && isOpeningBrace && !lastWasSpecial {
-			validJson += "\""
+			jsonStr += "\""
 		}
 
 		if isNotSpecial && lastWasSpecial {
-			validJson += "\""
+			jsonStr += "\""
 		}
 
 		if isColonOrComma && lastWasClosingBrace {
-			validJson += "\""
+			jsonStr += "\""
 		}
 
 		if (isClosingBrace && lastWasClosingBrace) {
-			validJson += "\""
+			jsonStr += "\""
 		}
 
-		validJson += current
-		last = current
+		jsonStr += currentChar
+		lastChar = currentChar
 	}
 
-	decoder := json.NewDecoder(strings.NewReader(validJson))
-	for {
-		var data interface{}
-		if err := decoder.Decode(&data); err == io.EOF {
-			break
-		} else if err != nil {
-			return shellson, errors.New("json conversion validation failed for " + validJson)
+	if *debug {
+		fmt.Fprintf(os.Stderr, "json is: %v\n", jsonStr)
+	}
+
+	err = json.Unmarshal([]byte(jsonStr), &result);
+	if err != nil {
+		result = inputStr
+		if *debug {
+			fmt.Fprintf(os.Stderr, "result is: %v (error: %v)\n", result, err)
 		}
-		return data, nil
+	} else if *debug {
+		fmt.Fprintf(os.Stderr, "result is: %v\n", result)
 	}
 
-	return shellson, errors.New("json conversion validation failed for " + validJson)
+	return result, err
 }
 
 func main() {
@@ -85,18 +83,18 @@ func main() {
 		os.Exit(2)
 	}
 
-	// generate data map
+	// generate environment map
 	environment := make(map[string]interface{})
 	for _, envVar := range os.Environ() {
 
 		envKeyValuePair := strings.Split(envVar, "=")
 		envKey, envValue :=  envKeyValuePair[0], envKeyValuePair[1]
 
-		data, err := createValidJson(envValue);
+		data, err := inputToObject(envValue, debug)
 		if (err != nil) {
-			environment[envKey] = envValue;
+			environment[envKey] = envValue
 		} else {
-			environment[envKey] = data;
+			environment[envKey] = data
 		}
 	}
 
@@ -105,10 +103,10 @@ func main() {
 	}
 
 	// render template
-	tmpl := template.Must(template.ParseGlob(*templateFile))
-	err := tmpl.Execute(os.Stdout, environment)
+	tpl := template.Must(template.ParseGlob(*templateFile))
+	err := tpl.Execute(os.Stdout, environment)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error during template execution: %s", err)
+		fmt.Fprintf(os.Stderr, "error rendering template %v: %v", *templateFile, err)
 		os.Exit(1)
 	}
 
