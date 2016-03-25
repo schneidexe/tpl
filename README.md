@@ -8,7 +8,7 @@ See test section and have a look at `test.tpl` (template) and `text.txt` (result
 
 Just download the binary for your OS and arch from the [releases](https://github.com/schneidexe/tpl/releases) page. 
 
-If you want to use it inside your docker image you can use:
+If you want to use it inside your docker image you can add this to your `Dockerfile`:
 
 ```
 RUN curl -sL https://github.com/schneidexe/tpl/releases/download/v0.3/tpl-linux-amd64 -o tpl && \
