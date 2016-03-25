@@ -1,3 +1,9 @@
+empty value default:
+<no value>
+
+empty value with check:
+
+
 simple string:
 bar
 

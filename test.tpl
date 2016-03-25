@@ -1,3 +1,9 @@
+empty value default:
+{{ .empty }}
+
+empty value with check:
+{{ if .empty }}{{ .empty }}{{ end }}
+
 simple string:
 {{ .foo }}
 
