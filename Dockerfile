@@ -1,6 +1,7 @@
-FROM golang:1.5.1
+FROM golang:1.8.1
 
 ENV USER root
+
 WORKDIR /go/src/github.com/schneidexe/tpl
 
 ADD . /go/src/github.com/schneidexe/tpl
