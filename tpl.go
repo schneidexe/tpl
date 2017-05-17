@@ -1,13 +1,13 @@
 package main
 
 import (
-	"text/template"
-	"os"
-	"flag"
-	"strings"
-	"fmt"
 	"encoding/json"
+	"flag"
+	"fmt"
+	"os"
 	"regexp"
+	"strings"
+	"text/template"
 )
 
 func inputToObject(inputStr string, debug *bool) (result interface{}, err error) {
@@ -40,7 +40,7 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 			jsonStr += "\""
 		}
 
-		if (isClosingBrace && lastWasClosingBrace) {
+		if isClosingBrace && lastWasClosingBrace {
 			jsonStr += "\""
 		}
 
@@ -52,7 +52,7 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 		fmt.Fprintf(os.Stderr, "json is: %v\n", jsonStr)
 	}
 
-	err = json.Unmarshal([]byte(jsonStr), &result);
+	err = json.Unmarshal([]byte(jsonStr), &result)
 	if err != nil {
 		result = inputStr
 		if *debug {
@@ -80,7 +80,7 @@ func main() {
 	}
 
 	if len(*templateFile) == 0 {
-		flag.Usage();
+		flag.Usage()
 		os.Exit(1)
 	}
 
@@ -94,10 +94,10 @@ func main() {
 	for _, envVar := range os.Environ() {
 
 		envKeyValuePair := strings.Split(envVar, "=")
-		envKey, envValue :=  envKeyValuePair[0], envKeyValuePair[1]
+		envKey, envValue := envKeyValuePair[0], envKeyValuePair[1]
 
 		data, err := inputToObject(envValue, debug)
-		if (err != nil) {
+		if err != nil {
 			environment[envKey] = envValue
 		} else {
 			environment[envKey] = data
