@@ -10,6 +10,9 @@ simple string:
 special characters:
 {{ .baz }}
 
+number:
+{{ .number }}
+
 list:
 {{ .bar }}
 
