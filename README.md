@@ -17,11 +17,8 @@ RUN curl -sL https://github.com/schneidexe/tpl/releases/download/v0.3/tpl-linux-
 
 ## build 
 ```
-docker build -t tpl . && \
-docker run --name tpl tpl && \
-docker cp tpl:/go/src/github.com/schneidexe/tpl/bin . && \
-docker rm tpl && \
-docker rmi tpl
+go get github.com/mitchellh/gox
+gox -arch="386 amd64" -os="darwin linux windows"
 ```
 
 ## test
