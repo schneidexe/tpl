@@ -7,6 +7,9 @@ empty value with check:
 simple string:
 {{ .foo }}
 
+null value:
+{{ .null }}
+
 special characters:
 {{ .baz }}
 
