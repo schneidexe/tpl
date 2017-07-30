@@ -1,6 +1,10 @@
 # tpl
 
-tpl is build for genrating config files from templates using simple or complex (lists, maps, objects) shell environment variables. It's build for docker since the binary has zero dependecies but you can use it across all platform and opertating systems.
+tpl is build for generating config files from templates using simple or complex (lists, maps, objects) shell environment 
+variables. Since the binary has zero dependencies it is build for docker but you can use it across all platform and 
+operating systems.
+
+tpl uses [sprig](https://github.com/Masterminds/sprig) to extend golang's template capabilities.
 
 See test section and have a look at `test.tpl` (template) and `text.txt` (result) for examples.
 
@@ -11,7 +15,7 @@ Just download the binary for your OS and arch from the [releases](https://github
 If you want to use it inside your docker image you can add this to your `Dockerfile`:
 
 ```
-RUN curl -sL https://github.com/schneidexe/tpl/releases/download/v0.3/tpl-linux-amd64 -o tpl && \
+RUN curl -sL https://github.com/schneidexe/tpl/releases/download/v0.4/tpl-linux-amd64 -o tpl && \
     chmod a+x tpl
 ```
 
