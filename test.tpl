@@ -12,6 +12,7 @@ null value:
 
 special characters:
 {{ .baz }}
+{{ .money }}
 
 number:
 {{ .number }}

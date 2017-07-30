@@ -54,13 +54,16 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 	}
 
 	err = json.Unmarshal([]byte(jsonStr), &result)
+
+	if *debug {
+		fmt.Fprintf(os.Stderr, "result is: %v, error: %v\n", result, err)
+	}
+
 	if err != nil || result == nil || reflect.TypeOf(result).Kind() == reflect.Float64 {
 		result = inputStr
 		if *debug {
-			fmt.Fprintf(os.Stderr, "result is: %v (error: %v)\n", result, err)
+			fmt.Fprintf(os.Stderr, "result is: %v\n")
 		}
-	} else if *debug {
-		fmt.Fprintf(os.Stderr, "result is: %v\n", result)
 	}
 
 	return result, err

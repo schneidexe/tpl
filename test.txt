@@ -12,6 +12,7 @@ null
 
 special characters:
 1.0-123
+500€
 
 number:
 59614658972

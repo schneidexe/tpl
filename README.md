@@ -30,6 +30,7 @@ export foobaz="{foo:[bar,baz]}"
 export baz="1.0-123"
 export number="59614658972"
 export null="null"
+export money="500€"
 
 tpl -t test.tpl | diff - test.txt && echo Tests succeeded! || echo Tests failed!
 ```
