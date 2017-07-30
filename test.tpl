@@ -44,3 +44,7 @@ access element in map:
 
 access subelements:
 {{ index .foobaz.foo 1 }}
+
+sprig:
+{{ .foo | upper }}
+{{ .bar | first }}
