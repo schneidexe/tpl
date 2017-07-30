@@ -1,8 +1,5 @@
-empty value default:
-{{ .empty }}
-
-empty value with check:
-{{ if .empty }}{{ .empty }}{{ end }}
+undefined value default:
+{{ .undefined }}
 
 simple string:
 {{ .foo }}
@@ -21,7 +18,11 @@ list:
 {{ .bar }}
 
 iterate over list:
-{{ range $bar := .bar}}{{ . }}
+{{ range .bar}}{{ . }}
+{{end}}
+
+iterate over undefined list:
+{{ range .undefined}}{{ . }}
 {{end}}
 
 iterate over list with index:

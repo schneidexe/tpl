@@ -1,7 +1,4 @@
-empty value default:
-<no value>
-
-empty value with check:
+undefined value default:
 
 
 simple string:
@@ -23,6 +20,9 @@ list:
 iterate over list:
 foo
 bar
+
+
+iterate over undefined list:
 
 
 iterate over list with index:

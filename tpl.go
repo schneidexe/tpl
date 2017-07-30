@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
-	"text/template"
+	"html/template"
 )
 
 func inputToObject(inputStr string, debug *bool) (result interface{}, err error) {
