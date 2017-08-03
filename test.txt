@@ -1,52 +1,58 @@
 undefined value default:
-
+_
 
 simple string:
-bar
+_bar
 
 null value:
-null
+_null
 
 special characters:
-1.0-123
-500€
+_1.0-123
+_500€
 
 number:
-59614658972
+_59614658972
 
 list:
-[foo bar]
+_[foo bar]
 
 iterate over list:
-foo
-bar
+_foo
+_bar
 
 
 iterate over undefined list:
 
 
+iterate over empty list:
+
+
 iterate over list with index:
-0:foo
-1:bar
+_0:foo
+_1:bar
 
 
 access element in list:
-bar
+_bar
 
 map:
-map[foo:bar bar:foo]
+_map[foo:bar bar:foo]
+
+empty map:
+_map[]
 
 iterate over map with key and value:
-bar:foo
-foo:bar
+_bar:foo
+_foo:bar
 
 
 access element in map:
-bar
+_bar
 
 access subelements:
-baz
+_baz
 
 sprig:
-BAR
-foo
+_BAR
+_foo

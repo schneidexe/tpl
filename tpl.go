@@ -25,8 +25,8 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 
 		isOpeningBrace, _ := regexp.MatchString("[{\\[]", currentChar)
 		isColonOrComma, _ := regexp.MatchString("[:,]", currentChar)
-		isNotSpecial, _ := regexp.MatchString("[^{\\[:,]", currentChar)
-		lastWasSpecial, _ := regexp.MatchString("[{\\[:,]", lastChar)
+		isNotSpecial, _ := regexp.MatchString("[^{}\\[\\]:,]", currentChar)
+		lastWasSpecial, _ := regexp.MatchString("[{}\\[\\]:,]", lastChar)
 		isClosingBrace, _ := regexp.MatchString("[}\\]]", currentChar)
 		lastWasClosingBrace, _ := regexp.MatchString("[^}\\]]", lastChar)
 
@@ -42,7 +42,7 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 			jsonStr += "\""
 		}
 
-		if isClosingBrace && lastWasClosingBrace {
+		if isClosingBrace && !lastWasSpecial {
 			jsonStr += "\""
 		}
 
@@ -71,7 +71,6 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 }
 
 func main() {
-
 	// set and parse cmd line flags
 	debug := flag.Bool("d", false, "enable debug mode")
 	templateFile := flag.String("t", "", "template file")
@@ -120,5 +119,4 @@ func main() {
 		fmt.Fprintf(os.Stderr, "error rendering template %v: %v", *templateFile, err)
 		os.Exit(2)
 	}
-
 }

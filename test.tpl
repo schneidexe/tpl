@@ -1,50 +1,57 @@
 undefined value default:
-{{ .undefined }}
+_{{ .undefined }}
 
 simple string:
-{{ .foo }}
+_{{ .foo }}
 
 null value:
-{{ .null }}
+_{{ .null }}
 
 special characters:
-{{ .baz }}
-{{ .money }}
+_{{ .baz }}
+_{{ .money }}
 
 number:
-{{ .number }}
+_{{ .number }}
 
 list:
-{{ .bar }}
+_{{ .bar }}
 
 iterate over list:
-{{ range .bar}}{{ . }}
+{{ range .bar}}_{{ . }}
 {{end}}
 
 iterate over undefined list:
-{{ range .undefined}}{{ . }}
+{{ range .undefined}}_{{ . }}
+{{end}}
+
+iterate over empty list:
+{{ range .woot}}_{{ . }}
 {{end}}
 
 iterate over list with index:
-{{ range $idx, $bar := .bar}}{{ $idx }}:{{ $bar }}
+{{ range $idx, $bar := .bar}}_{{ $idx }}:{{ $bar }}
 {{end}}
 
 access element in list:
-{{ index .bar 1 }}
+_{{ index .bar 1 }}
 
 map:
-{{ .foobar }}
+_{{ .foobar }}
+
+empty map:
+_{{ .whoa }}
 
 iterate over map with key and value:
-{{ range $foo, $bar := .foobar}}{{ $foo }}:{{ $bar }}
+{{ range $foo, $bar := .foobar}}_{{ $foo }}:{{ $bar }}
 {{end}}
 
 access element in map:
-{{ .foobar.foo }}
+_{{ .foobar.foo }}
 
 access subelements:
-{{ index .foobaz.foo 1 }}
+_{{ index .foobaz.foo 1 }}
 
 sprig:
-{{ .foo | upper }}
-{{ .bar | first }}
+_{{ .foo | upper }}
+_{{ .bar | first }}
