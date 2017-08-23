@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/Masterminds/sprig"
+	"html/template"
 	"os"
+	"path"
 	"reflect"
 	"regexp"
 	"strings"
-	"html/template"
-	"github.com/Masterminds/sprig"
 )
 
 func inputToObject(inputStr string, debug *bool) (result interface{}, err error) {
@@ -113,7 +114,7 @@ func main() {
 	}
 
 	// render template
-	tpl := template.Must(template.New(*templateFile).Funcs(sprig.FuncMap()).ParseFiles(*templateFile))
+	tpl := template.Must(template.New(path.Base(*templateFile)).Funcs(sprig.FuncMap()).ParseFiles(*templateFile))
 	err := tpl.Execute(os.Stdout, environment)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error rendering template %v: %v", *templateFile, err)

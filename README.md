@@ -38,5 +38,5 @@ export money="500€"
 export woot="[]"
 export whoa="{}"
 
-tpl -t test.tpl | diff - test.txt && echo Tests succeeded! || echo Tests failed!
+go run tpl.go -t test/test.tpl | diff - test/test.txt && echo Tests succeeded! || echo Tests failed!
 ```
