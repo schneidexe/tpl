@@ -80,7 +80,7 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		fmt.Fprintf(os.Stdout, "version %s\n", "0.4.1")
+		fmt.Fprintf(os.Stdout, "version %s\n", "0.4.2")
 		os.Exit(0)
 	}
 
