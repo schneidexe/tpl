@@ -34,9 +34,12 @@ export foobaz="{foo:[bar,baz]}"
 export baz="1.0-123"
 export number="59614658972"
 export null="null"
+export empty=
 export money="500€"
+export special="?&>:/"
 export woot="[]"
 export whoa="{}"
 
+go get -v
 go run tpl.go -t test/test.tpl | diff - test/test.txt && echo Tests succeeded! || echo Tests failed!
 ```

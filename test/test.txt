@@ -1,4 +1,9 @@
-undefined value default:
+undefined value:
+_<no value>
+_
+_
+
+empty value:
 _
 
 simple string:
@@ -10,6 +15,7 @@ _null
 special characters:
 _1.0-123
 _500€
+_?&>:/
 
 number:
 _59614658972
@@ -22,10 +28,10 @@ _foo
 _bar
 
 
-iterate over undefined list:
-
-
 iterate over empty list:
+
+
+iterate over undefined:
 
 
 iterate over list with index:
@@ -55,4 +61,6 @@ _baz
 
 sprig:
 _BAR
+_foo
+_foo
 _foo
