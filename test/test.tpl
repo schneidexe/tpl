@@ -27,9 +27,6 @@ iterate over list:
 {{range .bar}}_{{.}}
 {{end}}
 
-iterate over empty list:
-
-
 iterate over undefined:
 {{range .undefined}}_{{.}}
 {{end}}

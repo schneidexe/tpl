@@ -28,9 +28,6 @@ _foo
 _bar
 
 
-iterate over empty list:
-
-
 iterate over undefined:
 
 
