@@ -80,7 +80,7 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		fmt.Fprintf(os.Stdout, "version %s\n", "0.4.3")
+		fmt.Fprintf(os.Stdout, "version %s\n", "0.4.4")
 		os.Exit(0)
 	}
 
@@ -98,7 +98,7 @@ func main() {
 	environment := make(map[string]interface{})
 	for _, envVar := range os.Environ() {
 
-		envKeyValuePair := strings.Split(envVar, "=")
+		envKeyValuePair := strings.SplitN(envVar, "=", 2)
 		envKey, envValue := envKeyValuePair[0], envKeyValuePair[1]
 
 		data, err := inputToObject(envValue, debug)
