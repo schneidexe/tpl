@@ -15,7 +15,7 @@ Just download the binary for your OS and arch from the [releases](https://github
 If you want to use it inside your docker image you can add this to your `Dockerfile`:
 
 ```
-RUN curl -sL https://github.com/schneidexe/tpl/releases/download/v0.4.1/tpl-linux-amd64 -o tpl && \
+RUN curl -sL https://github.com/schneidexe/tpl/releases/download/v0.4.4/tpl-linux-amd64 -o tpl && \
     chmod a+x tpl
 ```
 

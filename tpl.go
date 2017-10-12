@@ -97,7 +97,6 @@ func main() {
 	// generate environment map
 	environment := make(map[string]interface{})
 	for _, envVar := range os.Environ() {
-
 		envKeyValuePair := strings.SplitN(envVar, "=", 2)
 		envKey, envValue := envKeyValuePair[0], envKeyValuePair[1]
 
