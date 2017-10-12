@@ -36,7 +36,7 @@ export number="59614658972"
 export null="null"
 export empty=
 export money="500€"
-export special="?&>:/"
+export special="?&>=:/"
 export woot="[]"
 export whoa="{}"
 

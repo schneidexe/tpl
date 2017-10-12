@@ -15,7 +15,7 @@ _null
 special characters:
 _1.0-123
 _500€
-_?&>:/
+_?&>=:/
 
 number:
 _59614658972
