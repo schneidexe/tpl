@@ -31,12 +31,14 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 		lastWasSpecial, _ := regexp.MatchString("[{}\\[\\]:,]", lastChar)
 		isClosingBrace, _ := regexp.MatchString("[}\\]]", currentChar)
 		lastWasClosingBrace, _ := regexp.MatchString("[^}\\]]", lastChar)
+		isQuote, _ := regexp.MatchString("[\"]", currentChar)
+		lastWasQuote, _ := regexp.MatchString("[\"]", lastChar)
 
-		if currentChar == "\"" {
+		if isQuote {
 			insideQuotes = !insideQuotes
 		}
 
-		if !insideQuotes && lastChar != "\"" {
+		if !insideQuotes && !lastWasQuote {
 			if position > 0 && isOpeningBrace && !lastWasSpecial {
 				jsonStr += "\""
 			}
