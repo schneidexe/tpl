@@ -40,7 +40,7 @@ access element in list:
 _bar
 
 map:
-_map[foo:bar bar:foo]
+_map[bar:foo foo:bar url:http://foo.bar]
 
 empty map:
 _map[]
@@ -48,6 +48,7 @@ _map[]
 iterate over map with key and value:
 _bar:foo
 _foo:bar
+_url:http://foo.bar
 
 
 access element in map:

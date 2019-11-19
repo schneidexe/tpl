@@ -16,6 +16,7 @@ import (
 func inputToObject(inputStr string, debug *bool) (result interface{}, err error) {
 	jsonStr := ""
 	lastChar := ""
+	insideQuotes := false
 
 	if *debug {
 		fmt.Fprintf(os.Stderr, "input is: %v\n", inputStr)
@@ -31,20 +32,26 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 		isClosingBrace, _ := regexp.MatchString("[}\\]]", currentChar)
 		lastWasClosingBrace, _ := regexp.MatchString("[^}\\]]", lastChar)
 
-		if position > 0 && isOpeningBrace && !lastWasSpecial {
-			jsonStr += "\""
+		if currentChar == "\"" {
+			insideQuotes = !insideQuotes
 		}
 
-		if isNotSpecial && lastWasSpecial {
-			jsonStr += "\""
-		}
+		if !insideQuotes && lastChar != "\"" {
+			if position > 0 && isOpeningBrace && !lastWasSpecial {
+				jsonStr += "\""
+			}
 
-		if isColonOrComma && lastWasClosingBrace {
-			jsonStr += "\""
-		}
+			if isNotSpecial && lastWasSpecial {
+				jsonStr += "\""
+			}
 
-		if isClosingBrace && !lastWasSpecial {
-			jsonStr += "\""
+			if isColonOrComma && lastWasClosingBrace {
+				jsonStr += "\""
+			}
+
+			if isClosingBrace && !lastWasSpecial {
+				jsonStr += "\""
+			}
 		}
 
 		jsonStr += currentChar
