@@ -39,6 +39,7 @@ export money="500€"
 export special="?&>=:/"
 export woot="[]"
 export whoa="{}"
+export backslash="\.\/"
 
 go get -v
 go run tpl.go -t test/test.tpl | diff - test/test.txt && echo Tests succeeded! || echo Tests failed!

@@ -40,7 +40,7 @@ access element in list:
 _bar
 
 map:
-_map[foo:bar bar:foo]
+_map[bar:foo foo:bar]
 
 empty map:
 _map[]
@@ -61,3 +61,6 @@ _BAR
 _foo
 _foo
 _foo
+
+backslash:
+_\.\/

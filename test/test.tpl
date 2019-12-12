@@ -59,3 +59,6 @@ _{{.foo | upper}}
 _{{.bar | first}}
 _{{default "foo" .undefined}}
 _{{default "foo" .empty}}
+
+backslash:
+_{{.backslash}}
