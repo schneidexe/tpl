@@ -40,6 +40,7 @@ export special="?&>=:/"
 export woot="[]"
 export whoa="{}"
 export backslash="\.\/"
+export urls="{google:[https:://google.com,http:://google.de],github:https:://github.com}"
 
 go get -v
 go run tpl.go -t test/test.tpl | diff - test/test.txt && echo Tests succeeded! || echo Tests failed!

@@ -14,42 +14,21 @@ import (
 )
 
 func inputToObject(inputStr string, debug *bool) (result interface{}, err error) {
-	jsonStr := ""
-	lastChar := ""
-
-	if *debug {
-		fmt.Fprintf(os.Stderr, "input is: %v\n", inputStr)
-	}
-
-	for position, rune := range inputStr {
-		currentChar := string(rune)
-
-		isOpeningBrace, _ := regexp.MatchString("[{\\[]", currentChar)
-		isColonOrComma, _ := regexp.MatchString("[:,]", currentChar)
-		isNotSpecial, _ := regexp.MatchString("[^{}\\[\\]:,]", currentChar)
-		lastWasSpecial, _ := regexp.MatchString("[{}\\[\\]:,]", lastChar)
-		isClosingBrace, _ := regexp.MatchString("[}\\]]", currentChar)
-		lastWasClosingBrace, _ := regexp.MatchString("[^}\\]]", lastChar)
-
-		if position > 0 && isOpeningBrace && !lastWasSpecial {
-			jsonStr += "\""
-		}
-
-		if isNotSpecial && lastWasSpecial {
-			jsonStr += "\""
-		}
-
-		if isColonOrComma && lastWasClosingBrace {
-			jsonStr += "\""
-		}
-
-		if isClosingBrace && !lastWasSpecial {
-			jsonStr += "\""
-		}
-
-		jsonStr += currentChar
-		lastChar = currentChar
-	}
+	jsonStr := inputStr
+	// insert " after , if next is none of [ { "
+	jsonStr = regexp.MustCompile(`,([^[{"])`).ReplaceAllString(jsonStr, ",\"$1")
+	// insert " before , if previous is none of ] } "
+	jsonStr = regexp.MustCompile(`([^]}"]),`).ReplaceAllString(jsonStr, "$1\",")
+	// insert " after [ { if next is none of ] [ } { , "
+	jsonStr = regexp.MustCompile(`([\[{])([^][}{,"])`).ReplaceAllString(jsonStr, "$1\"$2")
+	// insert " before ] } if previous is none of ] [ } { , "
+	jsonStr = regexp.MustCompile(`([^][}{,"])([\]}])`).ReplaceAllString(jsonStr, "$1\"$2")
+	// insert " after : if next is none of : [ { "
+	jsonStr = regexp.MustCompile(`([^:]):([^:[{"])`).ReplaceAllString(jsonStr, "$1:\"$2")
+	// insert " before : if previous is not :
+	jsonStr = regexp.MustCompile(`([^:"]):([^:])`).ReplaceAllString(jsonStr, "$1\":$2")
+	// replace :: with : (double colons can be used to escape a colon)
+	jsonStr = regexp.MustCompile(`::`).ReplaceAllString(jsonStr, ":")
 
 	if *debug {
 		fmt.Fprintf(os.Stderr, "json is: %v\n", jsonStr)

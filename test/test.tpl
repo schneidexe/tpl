@@ -62,3 +62,6 @@ _{{default "foo" .empty}}
 
 backslash:
 _{{.backslash}}
+
+urls:
+_{{.urls}}

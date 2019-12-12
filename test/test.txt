@@ -64,3 +64,6 @@ _foo
 
 backslash:
 _\.\/
+
+urls:
+_map[github:https://github.com google:[https://google.com http://google.de]]
