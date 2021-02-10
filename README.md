@@ -22,7 +22,8 @@ RUN curl -sL https://github.com/schneidexe/tpl/releases/download/v0.5.0/tpl-linu
 ## build 
 ```
 go get github.com/mitchellh/gox
-gox -arch="386 amd64" -os="darwin linux windows"
+gox -arch=amd64 -os="darwin linux windows"
+gox -arch=386 -os="linux windows"
 ```
 
 ## test
