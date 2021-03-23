@@ -6,7 +6,7 @@ operating systems.
 
 tpl uses [sprig](https://github.com/Masterminds/sprig) to extend golang's template capabilities.
 
-See test section and have a look at `test.tpl` (template) and `text.txt` (result) in test folder for examples.
+Check the test section and have a look at `test.tpl` (template) and `text.txt` (result) in test folder for examples.
 
 ## setup
 
