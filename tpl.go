@@ -13,6 +13,11 @@ import (
 	"text/template"
 )
 
+var (
+	// BuildVersion is used to pass version during build
+    BuildVersion string = ""
+)
+
 func inputToObject(inputStr string, debug *bool) (result interface{}, err error) {
 	jsonStr := inputStr
 	// insert " after , if next is none of [ { "
@@ -43,7 +48,7 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 	if err != nil || result == nil || reflect.TypeOf(result).Kind() == reflect.Float64 {
 		result = inputStr
 		if *debug {
-			fmt.Fprintf(os.Stderr, "result is: %v\n")
+			fmt.Fprintf(os.Stderr, "result is: %v\n", result)
 		}
 	}
 
@@ -59,7 +64,7 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		fmt.Fprintf(os.Stdout, "version %s\n", "0.5.1")
+		fmt.Fprintf(os.Stdout, "version %s\n", BuildVersion)
 		os.Exit(0)
 	}
 
