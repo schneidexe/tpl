@@ -68,7 +68,7 @@ _{{.urls}}
 
 include:
 _{{ include "foobar.txt" }}
-_{{ mustInclude "test-include.txt" | trim }}
+_{{ mustInclude "test/include.txt" | trim }}
 
 json:
 _{{ .json }}

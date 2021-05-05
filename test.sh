@@ -16,4 +16,4 @@ export urls="{google:[https:://google.com,http:://google.de],github:https:://git
 export json='{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}'
 
 go get -v
-go run tpl.go -t test.tpl | diff -y - test.txt && echo Tests succeeded! || echo Tests failed!
+go run tpl.go -t test.tpl | diff -y test.txt - && echo Tests succeeded! || echo Tests failed!

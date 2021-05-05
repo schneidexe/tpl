@@ -84,7 +84,7 @@ func renderInclude(fileName string, safeMode bool) string {
 		}
 	}
 
-	tpl := template.Must(template.New(fileName).Funcs(sprig.TxtFuncMap()).ParseFiles(path.Join(lookupDir, fileName)))
+	tpl := template.Must(template.New(path.Base(fileName)).Funcs(sprig.TxtFuncMap()).ParseFiles(path.Join(lookupDir, fileName)))
 
 	var result bytes.Buffer
 	tpl.Execute(&result, environment)
