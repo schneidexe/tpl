@@ -67,3 +67,10 @@ _\.\/
 
 urls:
 _map[github:https://github.com google:[https://google.com http://google.de]]
+
+include:
+_
+_test
+
+json:
+_map[abc:123 def:[a b c] ghi:[{,!?!,}]]

@@ -65,3 +65,10 @@ _{{.backslash}}
 
 urls:
 _{{.urls}}
+
+include:
+_{{ include "foobar.txt" }}
+_{{ mustInclude "test/include.txt" | trim }}
+
+json:
+_{{ .json }}
