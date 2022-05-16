@@ -15,7 +15,7 @@ Just download the binary for your OS and arch from the [releases](https://github
 If you want to use it inside your docker image you can add this to your `Dockerfile`:
 
 ```
-ADD https://github.com/schneidexe/tpl/releases/download/v0.6.0/tpl-linux-amd64 /bin/tpl
+ADD https://github.com/schneidexe/tpl/releases/download/v0.6.1/tpl-linux-amd64 /bin/tpl
 RUN chmod a+x /bin/tpl
 ```
 
@@ -23,13 +23,13 @@ RUN chmod a+x /bin/tpl
 
 Local:
 ```
-go get github.com/schneidexe/tpl
+go get github.com/schneidexe/tpl@latest
 ```
 
 X-Platform:
 ```
 go get github.com/mitchellh/gox
-gox
+gox -osarch="darwin/amd64 darwin/arm64 linux/386 linux/amd64 linux/arm64 windows/386 windows/amd64"
 ```
 
 ## test

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/Masterminds/sprig"
+	"github.com/Masterminds/sprig/v3"
 	"os"
 	"path"
 	"reflect"
@@ -109,7 +109,7 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		fmt.Fprintf(os.Stdout, "version %s\n", "0.6.0")
+		fmt.Fprintf(os.Stdout, "version %s\n", "0.6.1")
 		os.Exit(0)
 	}
 
