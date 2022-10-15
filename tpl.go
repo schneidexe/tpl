@@ -5,13 +5,14 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/Masterminds/sprig/v3"
 	"os"
 	"path"
 	"reflect"
 	"regexp"
 	"strings"
 	"text/template"
+
+	"github.com/Masterminds/sprig/v3"
 )
 
 var environment = make(map[string]interface{})
@@ -105,6 +106,7 @@ func main() {
 	prefix := flag.String("p", "", "only consider variables starting with prefix")
 	templateFile = flag.String("t", "", "template file")
 	version := flag.Bool("v", false, "show version")
+	outputFile := flag.String("o", "", "output file")
 
 	flag.Parse()
 
@@ -144,9 +146,20 @@ func main() {
 		fmt.Fprintf(os.Stderr, "environment map is: %v\n", environment)
 	}
 
+	outputWriter := os.Stdout
+	if len(*outputFile) > 0 {
+		// Create file and truncate it if it already exists
+		out, err := os.OpenFile(*outputFile, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error opening output file: %s", err)
+			return
+		}
+		outputWriter = out
+	}
+
 	// render template
 	tpl := template.Must(template.New(path.Base(*templateFile)).Funcs(sprig.TxtFuncMap()).Funcs(customFuctions).ParseFiles(*templateFile))
-	err := tpl.Execute(os.Stdout, environment)
+	err := tpl.Execute(outputWriter, environment)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error rendering template %v: %v\n", *templateFile, err)
 		os.Exit(2)
