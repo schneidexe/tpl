@@ -1,0 +1,86 @@
+undefined value:
+_<no value>
+_
+_
+
+empty value:
+_
+
+simple string:
+_bar
+
+null value:
+_null
+
+special characters:
+_1.0-123
+_500€
+_?&>=:/
+
+number:
+_59614658972
+
+list:
+_[foo bar]
+
+iterate over list:
+_foo
+_bar
+
+
+iterate over undefined:
+
+
+iterate over list with index:
+_0:foo
+_1:bar
+
+
+access element in list:
+_bar
+
+map:
+_map[bar:foo foo:bar]
+
+empty map:
+_map[]
+
+iterate over map with key and value:
+_bar:foo
+_foo:bar
+
+
+access element in map:
+_bar
+
+access subelements:
+_baz
+
+sprig:
+_BAR
+_foo
+_foo
+_foo
+
+backslash:
+_\.\/
+
+urls:
+_map[github:https://github.com google:[https://google.com http://google.de]]
+
+include:
+_
+_test
+
+json:
+_map[abc:123 def:[a b c] ghi:[{,!?!,}]]
+_{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}
+{
+
+"abc":"123"
+
+,"def":"[A B C]"
+
+,"ghi":"[{,!?!,}]"
+
+}
