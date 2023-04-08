@@ -17,6 +17,10 @@ import (
 
 var environment = make(map[string]interface{})
 var templateFile *string
+var (
+	// BuildVersion is used to pass version during build
+    BuildVersion string = ""
+)
 
 // add custom functions
 var customFuctions = template.FuncMap{
@@ -111,7 +115,7 @@ func main() {
 	flag.Parse()
 
 	if *version {
-		fmt.Fprintf(os.Stdout, "version %s\n", "0.7.0")
+		fmt.Fprintf(os.Stdout, "version %s\n", BuildVersion)
 		os.Exit(0)
 	}
 

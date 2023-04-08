@@ -1,0 +1,202 @@
+name: Build and release
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*.*.*'
+  pull_request:
+    branches:
+      - master
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup GoLang
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.19.1
+
+      - name: Run vet & lint
+        run: |
+          go install golang.org/x/lint/golint@latest
+          go vet .
+          golint .
+
+      - name: Build
+        run: |
+          go version
+
+          export GOBIN=$(go env GOPATH)/bin
+          export PATH=$PATH:$GOBIN
+          go get -v
+
+          go install github.com/mitchellh/gox@latest
+          gox \
+            -osarch="darwin/amd64 darwin/arm64 linux/386 linux/amd64 linux/arm64 windows/386 windows/amd64" \
+            -ldflags="-X 'main.BuildVersion=${GITHUB_REF##*/}'" \
+            -output="dist/tpl-{{.OS}}-{{.Arch}}"
+
+      - name: Test version string
+        run: |
+          go run -ldflags="-X 'main.BuildVersion=${GITHUB_REF##*/}'" tpl.go -v | grep "${GITHUB_REF##*/}"
+
+      - name: Calculate checksums
+        run: |
+          cd dist
+          sha512sum tpl-* > sha512sums.txt
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: binaries
+          path: dist/*
+
+  test:
+    name: test on ${{ matrix.target }}
+    needs:
+      - build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            binary: tpl-linux-amd64
+            target: Linux
+
+          - os: macos-latest
+            binary: tpl-darwin-amd64
+            target: MacOS
+
+          - os: windows-latest
+            binary: tpl-windows-amd64.exe
+            target: Windows
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: binaries
+          path: .
+
+      - name: Run test on Linux/MacOS
+        if: matrix.os != 'windows-latest'
+        run: |
+          chmod +x ${{ matrix.binary }}
+          ./${{ matrix.binary }} -v
+
+          export foo="bar"
+          export bar="[foo,bar]"
+          export foobar="{foo:bar,bar:foo}"
+          export foobaz="{foo:[bar,baz]}"
+          export baz="1.0-123"
+          export number="59614658972"
+          export null="null"
+          export empty=
+          export money="500€"
+          export special="?&>=:/"
+          export woot="[]"
+          export whoa="{}"
+          export backslash="\.\/"
+          export urls="{google:[https:://google.com,http:://google.de],github:https:://github.com}"
+          export json='{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}'
+
+          ./${{ matrix.binary }} -t test.tpl | diff -y test.txt -
+          ./${{ matrix.binary }} -t test.tpl -o test.out && diff -y test.txt test.out
+
+      - name: Run test on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          .\\${{ matrix.binary }} -v
+
+        # SET foo="bar"
+        # SET bar="[foo,bar]"
+        # SET foobar="{foo:bar,bar:foo}"
+        # SET foobaz="{foo:[bar,baz]}"
+        # SET baz="1.0-123"
+        # SET number="59614658972"
+        # SET null="null"
+        # SET empty=
+        # SET money="500€"
+        # SET special="?&>=:/"
+        # SET woot="[]"
+        # SET whoa="{}"
+        # SET backslash="\.\/"
+        # SET urls="{google:[https:://google.com,http:://google.de],github:https:://github.com}"
+        # SET json='{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}'
+
+        # .\\${{ matrix.binary }} -t test.tpl
+        # .\\${{ matrix.binary }} -t test.tpl -o test.out
+        shell: cmd
+
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - test
+      - build
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag on master
+        run: echo "TPL_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: binaries
+          path: dist
+
+      - name: Update README
+        if: ${{ !contains(github.event.commits[0].message, 'auto-update README') }}
+        run: |
+          cp dist/tpl-linux-amd64 /usr/local/bin/tpl
+          chmod +x /usr/local/bin/tpl
+
+          export TPL_VERSION=${TPL_VERSION}
+
+          tpl -t README.md.tpl | tee README.md
+
+          git branch
+
+          if [[ "$(git status --porcelain)" != "" ]]; then
+            git config user.name "GitHub Action"
+            git config user.email "action@github.com"
+            git add .
+            git commit -m "docs(readme): auto-update README"
+            git push origin HEAD:master
+          fi
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+
+      - name: Upload multiple assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -x
+          assets=()
+          for asset in dist/*; do
+            assets+=("-a" "$asset")
+          done
+          hub release edit "${assets[@]}" -m "" "${GITHUB_REF##*/}"
