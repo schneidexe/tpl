@@ -24,6 +24,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.19.1
+          cache: false
 
       - name: Run vet & lint
         run: |
