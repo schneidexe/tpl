@@ -119,24 +119,24 @@ jobs:
         run: |
           .\\${{ matrix.binary }} -v
 
-        # SET foo="bar"
-        # SET bar="[foo,bar]"
-        # SET foobar="{foo:bar,bar:foo}"
-        # SET foobaz="{foo:[bar,baz]}"
-        # SET baz="1.0-123"
-        # SET number="59614658972"
-        # SET null="null"
-        # SET empty=
-        # SET money="500€"
-        # SET special="?&>=:/"
-        # SET woot="[]"
-        # SET whoa="{}"
-        # SET backslash="\.\/"
-        # SET urls="{google:[https:://google.com,http:://google.de],github:https:://github.com}"
-        # SET json='{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}'
+          SET foo="bar"
+          SET bar="[foo,bar]"
+          SET foobar="{foo:bar,bar:foo}"
+          SET foobaz="{foo:[bar,baz]}"
+          SET baz="1.0-123"
+          SET number="59614658972"
+          SET null="null"
+          SET empty=
+          SET money="500€"
+          SET special="?&>=:/"
+          SET woot="[]"
+          SET whoa="{}"
+          SET backslash="\.\/"
+          SET urls="{google:[https:://google.com,http:://google.de],github:https:://github.com}"
+          SET json='{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}'
 
-        # .\\${{ matrix.binary }} -t test.tpl
-        # .\\${{ matrix.binary }} -t test.tpl -o test.out
+          .\\${{ matrix.binary }} -t test.tpl
+          .\\${{ matrix.binary }} -t test.tpl -o test.out
         shell: cmd
 
   release:
