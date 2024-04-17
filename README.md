@@ -23,7 +23,7 @@ RUN chmod a+x /bin/tpl
 
 Local:
 ```
-go get github.com/schneidexe/tpl@latest
+go get github.com/schneidexe/tpl
 ```
 
 X-Platform:
