@@ -28,7 +28,7 @@ go get github.com/schneidexe/tpl
 
 X-Platform:
 ```
-go get github.com/mitchellh/gox
+go install github.com/mitchellh/gox
 gox -osarch="darwin/amd64 darwin/arm64 linux/386 linux/amd64 linux/arm64 windows/386 windows/amd64"
 ```
 
