@@ -75,7 +75,7 @@ func inputToObject(inputStr string, debug *bool) (result interface{}, err error)
 func renderInclude(fileName string, safeMode bool) string {
 	// lookup relative file names in same directory like main template
 	lookupDir := ""
-	if !strings.HasPrefix(fileName, "/") && !strings.HasPrefix(fileName, "/") {
+	if !strings.HasPrefix(fileName, "/") {
 		lookupDir = path.Dir(*templateFile)
 	}
 
