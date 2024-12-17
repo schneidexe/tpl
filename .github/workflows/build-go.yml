@@ -57,6 +57,14 @@ jobs:
     # - uses: actions/setup-python@v5
     # - uses: pre-commit/action@v3.0.1
 
+    - name: Bump version and push tag
+      if: github.ref == 'refs/heads/main'
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.2
+      with:
+        dry_run: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Get Version from Tag
       run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
@@ -79,7 +87,7 @@ jobs:
           OUTPUT_NAME=tpl-macos-${{ matrix.arch }}
         fi
         go build \
-          -ldflags="-X main.BuildVersion=${VERSION}" \
+          -ldflags="-X main.BuildVersion=${{ steps.tag_version.outputs.new_tag }}" \
           -o bin/$OUTPUT_NAME \
           ./tpl.go
 
