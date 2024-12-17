@@ -17,10 +17,7 @@ import (
 
 var environment = make(map[string]interface{})
 var templateFile *string
-var (
-	// BuildVersion is used to pass version during build
-    BuildVersion string = ""
-)
+var BuildVersion string
 
 // add custom functions
 var customFuctions = template.FuncMap{
