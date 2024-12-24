@@ -15,8 +15,6 @@ export backslash="\.\/"
 export urls="{google:[https:://google.com,http:://google.de],github:https:://github.com}"
 export json='{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}'
 
-go get -v
-
 echo
 echo
 
