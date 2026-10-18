@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
-export foo="bar"
-export bar="[foo,bar]"
-export foobar="{foo:bar,bar:foo}"
-export foobaz="{foo:[bar,baz]}"
-export baz="1.0-123"
-export number="59614658972"
-export null="null"
-export empty=
-export money="500€"
-export special="?&>=:/"
-export woot="[]"
-export whoa="{}"
-export backslash="\.\/"
-export urls="{google:[https:://google.com,http:://google.de],github:https:://github.com}"
-export json='{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}'
+export tpl_test_foo="bar"
+export tpl_test_bar="[foo,bar]"
+export tpl_test_foobar="{foo:bar,bar:foo}"
+export tpl_test_foobaz="{foo:[bar,baz]}"
+export tpl_test_baz="1.0-123"
+export tpl_test_number="59614658972"
+export tpl_test_null="null"
+export tpl_test_empty=
+export tpl_test_money="500€"
+export tpl_test_special="?&>=:/"
+export tpl_test_woot="[]"
+export tpl_test_whoa="{}"
+export tpl_test_backslash="\.\/"
+export tpl_test_urls="{google:[https:://google.com,http:://google.de],github:https:://github.com}"
+export tpl_test_json='{"abc":123,"def":["a","b","c"],"ghi":"[{,!?!,}]"}'
+
+env | grep tpl_test
 
 echo
 echo

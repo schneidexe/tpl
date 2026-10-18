@@ -1,5 +1,6 @@
 .idea
 *.iml
-test.out
-tpl_*_*
-tpl-*-*
+/test.out
+/tpl
+/tpl_*_*
+/tpl-*-*
